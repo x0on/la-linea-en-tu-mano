@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>La Línea en tu mano · Demo</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#162a32;background:#f4f7f5;--teal:#075c52;--line:#dce7e1}
+*{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #188477;outline-offset:3px}
+header{background:#fff;border-bottom:1px solid var(--line)}.shell{width:min(960px,calc(100% - 36px));margin:auto}.bar{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:11px;font-weight:750}.mark{background:var(--teal);color:#fff;border-radius:12px;padding:10px;font-size:20px}.brand small{display:block;color:#51655f;font-weight:500}.badge{background:#e8f4ee;color:#195c4e;padding:6px 11px;border-radius:999px;font-size:.8rem;font-weight:700;white-space:nowrap}
+main{padding:32px 0 48px}.hero{background:#103e39;color:#fff;border-radius:24px;padding:clamp(24px,6vw,56px);position:relative;overflow:hidden}.hero:after{content:'';position:absolute;right:-105px;top:-170px;width:420px;height:420px;border:1px solid #5f9185;border-radius:50%;box-shadow:0 0 0 30px #ffffff0b,0 0 0 65px #ffffff0b,0 0 0 100px #ffffff0b;pointer-events:none}.hero>*{position:relative;z-index:1}.hero h1{font-size:clamp(2.3rem,6vw,4rem);line-height:1.04;letter-spacing:-.055em;margin:0 0 14px}.hero p{max-width:460px;color:#dceee7;margin:0;line-height:1.55}.nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}.nav button,.secondary{padding:10px 15px;border-radius:10px;background:#fff;border:1px solid var(--line);color:#193c35;font-weight:650}.nav button[aria-current=page],.primary{background:var(--teal);color:white;border:1px solid var(--teal)}.primary{padding:12px 18px;border-radius:10px;font-weight:700}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:clamp(18px,4vw,32px)}h2{margin:0 0 8px;font-size:1.55rem;letter-spacing:-.025em}p{line-height:1.5}.muted{color:#506760}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 20px}.choice{text-align:left;padding:14px;border:1px solid var(--line);background:#f7faf8;border-radius:12px;color:#193c35;font-weight:650}.choice[aria-pressed=true]{background:#e1f3eb;border-color:var(--teal)}.choice span{display:block;font-size:1.4rem;margin-bottom:5px}label,legend{font-weight:650}fieldset{padding:0;border:0;margin:0;min-width:0}.field{display:grid;gap:7px;margin-bottom:17px}.field input,.field textarea{width:100%;min-width:0;border:1px solid #acbeb5;border-radius:9px;padding:10px 12px;background:white;color:inherit}.field textarea{resize:vertical}.field small,.note{color:#506760}.feedback{margin:0;color:#913021}.success{padding:14px;background:#e4f4e9;border-radius:10px;margin-bottom:16px}.report{padding:16px 0;border-bottom:1px solid var(--line)}.report:last-child{border-bottom:0}.report h3{margin:0}.report p{margin:6px 0;overflow-wrap:anywhere}.report img,#preview{display:block;width:min(200px,100%);max-height:130px;object-fit:cover;border-radius:9px;margin-top:8px}.report .status{margin:8px 0;display:inline-block}.note{font-size:.9rem;margin-top:22px}.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:9px}[hidden]{display:none!important}
+.geo{margin-bottom:15px}.geo p{margin:6px 0;font-size:.9rem}.geo a,.report a{color:var(--teal);font-weight:650}.field input,.field textarea{font-size:16px}button{min-height:44px}main{padding-bottom:max(48px,env(safe-area-inset-bottom))}
+</style>
+</head>
+<body>
+<header><div class="shell bar"><div class="brand"><span class="mark" aria-hidden="true">↗</span><div>La Línea en tu mano<small>La Línea de la Concepción</small></div></div><span class="badge">Prototipo</span></div></header>
+<main class="shell">
+<section class="hero"><h1>¿Qué ocurre<br>en tu calle?</h1><p>Comunica una incidencia en la vía pública y consulta cómo avanza tu aviso.</p></section>
+<nav class="nav" aria-label="Secciones del prototipo">
+<button type="button" data-view="new" aria-current="page">Nuevo aviso</button>
+<button type="button" data-view="mine">Mis avisos</button>
+<button type="button" data-view="staff">Simular gestión</button>
+</nav>
+<section class="panel" id="new">
+<h2>Comunicar una incidencia</h2>
+<form id="form">
+<fieldset><legend>¿Qué quieres comunicar?</legend>
+<div class="choices">
+<button type="button" class="choice" data-kind="Alumbrado público" aria-pressed="false"><span aria-hidden="true">💡</span>Farola averiada</button>
+<button type="button" class="choice" data-kind="Bache en la calzada" aria-pressed="false"><span aria-hidden="true">⚠</span>Bache en la calzada</button>
+</div></fieldset>
+<div class="geo">
+<div class="actions"><button type="button" class="secondary" id="gps">Usar mi ubicación</button><button type="button" class="secondary" id="clear-gps" hidden>Quitar ubicación GPS</button></div>
+<p class="muted" id="gps-status" role="status">Usa el GPS del teléfono o escribe la dirección.</p>
+<a id="map" target="_blank" rel="noopener noreferrer" hidden>Comprobar ubicación en Mapas</a>
+</div>
+<label class="field">Calle o referencia <input id="location" maxlength="160" placeholder="Ej. Calle Real, junto a la plaza"><small>Si has añadido el GPS, puedes dejar este campo vacío.</small></label>
+<label class="field">Descripción <textarea id="description" rows="3" maxlength="500" placeholder="Ej. La farola lleva dos noches apagada"></textarea></label>
+<label class="field">Foto (opcional) <input id="photo" type="file" accept="image/*"></label>
+<img id="preview" alt="Vista previa de la foto" hidden>
+<div class="actions"><button class="primary" type="submit">Enviar aviso</button><p id="error" class="feedback" role="alert"></p></div>
+</form></section>
+<section class="panel" id="mine" hidden><div class="success" id="confirmation" role="status" hidden></div><h2>Mis avisos</h2><p class="muted">Consulta la referencia y el estado de cada incidencia.</p><div id="reports"></div></section>
+<section class="panel" id="staff" hidden><h2>Simular gestión municipal</h2><p class="muted">Cambia el estado de un aviso y vuelve a «Mis avisos» para ver la actualización.</p><div id="queue"></div><p id="staff-status" role="status"></p></section>
+<p class="note">Demostración con GECOR simulado. Los avisos, las ubicaciones y las fotos se guardan en este navegador. <a href="https://www.lalineaentumano.es/" target="_blank" rel="noopener noreferrer">Abrir portal oficial</a>.</p>
+</main>
+<script>
+const key = 'la-linea-demo-v1';
+const statuses = ['Recibido', 'En curso', 'Resuelto'];
+const find = id => document.getElementById(id);
+const nav = [...document.querySelectorAll('[data-view]')];
+const choices = [...document.querySelectorAll('[data-kind]')];
+let reports = [];
+let coordinates = null;
+function mapsURL(point) {
+  return 'https://maps.apple.com/?ll=' + point.latitude + ',' + point.longitude + '&q=Incidencia';
+}
+function setCoordinates(point) {
+  coordinates = point;
+  find('clear-gps').hidden = !point;
+  find('map').hidden = !point;
+  if (point) find('map').href = mapsURL(point);
+  else find('map').removeAttribute('href');
+}
+find('clear-gps').addEventListener('click', () => {
+  setCoordinates(null);
+  find('gps-status').textContent = 'Ubicación GPS retirada. Puedes escribir la dirección.';
+});
+find('gps').addEventListener('click', () => {
+  const status = find('gps-status');
+  if (!window.isSecureContext || !navigator.geolocation) {
+    status.textContent = 'Abre la demo desde una dirección HTTPS para usar el GPS. También puedes escribir la dirección.';
+    return;
+  }
+  find('gps').disabled = true;
+  find('clear-gps').disabled = true;
+  status.textContent = 'Buscando tu ubicación…';
+  const unlock = () => {
+    find('gps').disabled = false;
+    find('clear-gps').disabled = false;
+  };
+  navigator.geolocation.getCurrentPosition(({coords}) => {
+    setCoordinates({latitude: Number(coords.latitude.toFixed(6)), longitude: Number(coords.longitude.toFixed(6)), accuracy: Math.ceil(coords.accuracy)});
+    status.textContent = 'Ubicación añadida · precisión estimada de ' + coordinates.accuracy + ' m. Comprueba el punto antes de enviar.';
+    find('error').textContent = '';
+    unlock();
+  }, error => {
+    status.textContent = error.code === 1
+      ? 'El navegador no tiene permiso para acceder a tu ubicación. Puedes escribir la dirección.'
+      : 'No se pudo obtener una nueva ubicación. Inténtalo de nuevo o escribe la dirección.';
+    unlock();
+  }, {enableHighAccuracy: true, timeout: 12000, maximumAge: 0});
+});
+let category = '';
+let attachment = '';
+let photoVersion = 0;
+try { reports = JSON.parse(localStorage.getItem(key) || '[]'); } catch { reports = []; }
+function save(next) {
+  localStorage.setItem(key, JSON.stringify(next));
+  reports = next;
+}
+function element(tag, value, css) {
+  const node = document.createElement(tag);
+  node.textContent = value;
+  if (css) node.className = css;
+  return node;
+}
+function show(view) {
+  nav.forEach(button => {
+    const active = button.dataset.view === view;
+    find(button.dataset.view).hidden = !active;
+    if (active) button.setAttribute('aria-current', 'page');
+    else button.removeAttribute('aria-current');
+  });
+  render(view === 'staff');
+}
+function render(staff) {
+  const container = find(staff ? 'queue' : 'reports');
+  container.replaceChildren();
+  if (!reports.length) {
+    container.append(element('p', 'Todavía no hay avisos. Crea uno desde «Nuevo aviso».', 'muted'));
+  }
+  reports.forEach(report => {
+    const item = element('article', '', 'report');
+    const row = element('div', '', 'row');
+    row.append(element('h3', report.category), element('span', statuses[report.stage], 'badge status'));
+    item.append(row, element('p', report.id + (report.location ? ' · ' + report.location : '')));
+    if (report.coordinates) {
+      const link = element('a', 'Ver punto en Mapas');
+      link.href = mapsURL(report.coordinates);
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      item.append(link, element('p', 'Precisión GPS estimada: ' + report.coordinates.accuracy + ' m', 'muted'));
+    }
+    if (report.description) item.append(element('p', report.description, 'muted'));
+    if (report.photo) {
+      const img = element('img', '');
+      img.src = report.photo;
+      img.alt = 'Foto adjunta al aviso';
+      item.append(img);
+    }
+    if (staff && report.stage < statuses.length - 1) {
+      const action = element('button', report.stage === 0 ? 'Marcar en curso' : 'Marcar resuelto', 'secondary');
+      action.type = 'button';
+      action.addEventListener('click', () => {
+        try {
+          save(reports.map(entry => entry.id === report.id ? {...entry, stage: entry.stage + 1} : entry));
+          render(true);
+          find('staff-status').textContent = report.id + ' actualizado a «' + statuses[report.stage + 1] + '».';
+        } catch {
+          find('staff-status').textContent = 'No se pudo guardar el cambio en este navegador.';
+        }
+      });
+      item.append(action);
+    }
+    container.append(item);
+  });
+}
+nav.forEach(button => button.addEventListener('click', () => {
+  find('confirmation').hidden = true;
+  show(button.dataset.view);
+}));
+choices.forEach(button => button.addEventListener('click', () => {
+  category = button.dataset.kind;
+  choices.forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+  find('error').textContent = '';
+}));
+find('photo').addEventListener('change', async event => {
+  const version = ++photoVersion;
+  const file = event.target.files[0];
+  const submit = find('form').querySelector('[type=submit]');
+  attachment = '';
+  find('preview').hidden = true;
+  find('preview').removeAttribute('src');
+  find('error').textContent = '';
+  submit.disabled = Boolean(file);
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    img.src = url;
+    await img.decode();
+    if (version !== photoVersion) return;
+    const scale = Math.min(1, 640 / Math.max(img.width, img.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(img.width * scale));
+    canvas.height = Math.max(1, Math.round(img.height * scale));
+    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+    attachment = canvas.toDataURL('image/jpeg', 0.72);
+    find('preview').src = attachment;
+    find('preview').hidden = false;
+  } catch {
+    if (version === photoVersion) {
+      event.target.value = '';
+      find('error').textContent = 'No se pudo abrir la foto. Prueba con otra imagen.';
+    }
+  } finally {
+    URL.revokeObjectURL(url);
+    if (version === photoVersion) submit.disabled = false;
+  }
+});
+find('form').addEventListener('submit', event => {
+  event.preventDefault();
+  if (find('gps').disabled) {
+    find('error').textContent = 'Espera a que termine la búsqueda de ubicación.';
+    return;
+  }
+  const location = find('location').value.trim();
+  if (!category || (!location && !coordinates)) {
+    find('error').textContent = 'Selecciona el tipo de incidencia e indica dónde ocurre.';
+    return;
+  }
+  const id = 'DEMO-' + String(reports.length + 1).padStart(3, '0');
+  try {
+    save([{id, category, location, coordinates, description: find('description').value.trim(), photo: attachment, stage: 0}, ...reports]);
+  } catch {
+    find('error').textContent = 'No se pudo guardar el aviso en este navegador. Prueba sin la foto.';
+    return;
+  }
+  event.target.reset();
+  setCoordinates(null);
+  find('gps-status').textContent = 'Usa el GPS del teléfono o escribe la dirección.';
+  category = '';
+  attachment = '';
+  find('preview').hidden = true;
+  find('preview').removeAttribute('src');
+  find('error').textContent = '';
+  choices.forEach(option => option.setAttribute('aria-pressed', 'false'));
+  show('mine');
+  find('confirmation').hidden = false;
+  find('confirmation').textContent = 'Aviso recibido · ' + id;
+});
+</script>
+</body>
+</html>
