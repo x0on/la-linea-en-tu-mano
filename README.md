@@ -1,6 +1,6 @@
 # La Línea en tu mano · Demo
 
-**[Abrir la demo en vivo](https://x0on.github.io/la-linea-en-tu-mano/)**
+**[Abrir la demo en vivo](https://x0on.github.io/la-linea-en-tu-mano/)** · **[Ver la propuesta interactiva](https://x0on.github.io/la-linea-en-tu-mano/propuesta.html)**
 
 Prototipo de avisos de alumbrado y baches para La Línea de la Concepción.
 GECOR está simulado y los datos se guardan en el navegador.
