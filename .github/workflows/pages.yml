@@ -19,6 +19,7 @@ jobs:
       - run: |
           mkdir _site
           cp index.html manifest.webmanifest icon.svg _site/
+          if [ -f propuesta.html ]; then cp propuesta.html _site/; fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
