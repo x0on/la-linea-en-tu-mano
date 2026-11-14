@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="./manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap">
 <title>La Línea en tu mano · Demo</title>
 <style>
 :root{font-family:system-ui,sans-serif;color:#162a32;background:#f4f7f5;--teal:#075c52;--line:#dce7e1}
@@ -13,18 +15,34 @@ header{background:#fff;border-bottom:1px solid var(--line)}.shell{width:min(960p
 main{padding:32px 0 48px}.hero{background:#103e39;color:#fff;border-radius:24px;padding:clamp(24px,6vw,56px);position:relative;overflow:hidden}.hero:after{content:'';position:absolute;right:-105px;top:-170px;width:420px;height:420px;border:1px solid #5f9185;border-radius:50%;box-shadow:0 0 0 30px #ffffff0b,0 0 0 65px #ffffff0b,0 0 0 100px #ffffff0b;pointer-events:none}.hero>*{position:relative;z-index:1}.hero h1{font-size:clamp(2.3rem,6vw,4rem);line-height:1.04;letter-spacing:-.055em;margin:0 0 14px}.hero p{max-width:460px;color:#dceee7;margin:0;line-height:1.55}.nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}.nav button,.secondary{padding:10px 15px;border-radius:10px;background:#fff;border:1px solid var(--line);color:#193c35;font-weight:650}.nav button[aria-current=page],.primary{background:var(--teal);color:white;border:1px solid var(--teal)}.primary{padding:12px 18px;border-radius:10px;font-weight:700}
 .panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:clamp(18px,4vw,32px)}h2{margin:0 0 8px;font-size:1.55rem;letter-spacing:-.025em}p{line-height:1.5}.muted{color:#506760}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 20px}.choice{text-align:left;padding:14px;border:1px solid var(--line);background:#f7faf8;border-radius:12px;color:#193c35;font-weight:650}.choice[aria-pressed=true]{background:#e1f3eb;border-color:var(--teal)}.choice span{display:block;font-size:1.4rem;margin-bottom:5px}label,legend{font-weight:650}fieldset{padding:0;border:0;margin:0;min-width:0}.field{display:grid;gap:7px;margin-bottom:17px}.field input,.field textarea{width:100%;min-width:0;border:1px solid #acbeb5;border-radius:9px;padding:10px 12px;background:white;color:inherit}.field textarea{resize:vertical}.field small,.note{color:#506760}.feedback{margin:0;color:#913021}.success{padding:14px;background:#e4f4e9;border-radius:10px;margin-bottom:16px}.report{padding:16px 0;border-bottom:1px solid var(--line)}.report:last-child{border-bottom:0}.report h3{margin:0}.report p{margin:6px 0;overflow-wrap:anywhere}.report img,#preview{display:block;width:min(200px,100%);max-height:130px;object-fit:cover;border-radius:9px;margin-top:8px}.report .status{margin:8px 0;display:inline-block}.note{font-size:.9rem;margin-top:22px}.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:9px}[hidden]{display:none!important}
 .geo{margin-bottom:15px}.geo p{margin:6px 0;font-size:.9rem}.geo a,.report a{color:var(--teal);font-weight:650}.field input,.field textarea{font-size:16px}button{min-height:44px}main{padding-bottom:max(48px,env(safe-area-inset-bottom))}
+body{font-family:"DM Sans",system-ui,sans-serif;background:#f8f8f4;color:#162f3a}header{background:#f8f8f4}.shell{width:min(1120px,calc(100% - 40px))}.mark{background:#113e55}.badge{background:#e5edf3;color:#133b51}.hero{display:flex;align-items:flex-end;min-height:360px;background:#14364a;isolation:isolate;color:white;border-radius:28px;padding:clamp(25px,5vw,60px)}.hero:after{inset:0;width:auto;height:auto;border:0;border-radius:0;box-shadow:none;background:linear-gradient(90deg,#092b3eee,#092b3e79 55%,#092b3e18),linear-gradient(0deg,#092b3e6e,transparent);z-index:-1}.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;z-index:-2}.hero h1,h2{font-family:"Instrument Sans",system-ui,sans-serif}.hero h1{font-size:clamp(2.65rem,7vw,5.2rem);letter-spacing:-.065em}.hero p{max-width:370px;color:#f4f9ff}.hero .primary{display:inline-flex;align-items:center;margin-top:22px;text-decoration:none;background:#e7f3ff;color:#10384c;border-color:transparent}.place{font-weight:700;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px!important}.photo-credit{margin:7px 4px 0;font-size:.75rem;color:#516269;text-align:right}.photo-credit a{color:inherit}.nav{margin:24px 0 14px}.nav button[aria-current=page],.primary{background:#104b65;border-color:#104b65}.panel{border-radius:20px;border-color:#e1e8e8}.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:19px}.service{display:flex;flex-direction:column;gap:7px;padding:20px;border:1px solid #dde7eb;border-radius:16px;background:#f8fbfc;color:#153f52;text-decoration:none;text-align:left;font:inherit}.service strong{font-size:1.06rem}.service small{color:#526770;font-size:.88rem;line-height:1.45}.service:hover{border-color:#39718c}.service .symbol{background:#e4eef5;border-radius:10px;width:40px;height:40px;display:grid;place-items:center;font-size:1.25rem}.service-detail{margin-top:15px;padding:17px;border-radius:12px;background:#eef4f7}.service-detail a{color:#104b65;font-weight:700}.field input,.field textarea{border-color:#9db2bc}.choice{background:#f7fafc;border-color:#dde7eb}.choice[aria-pressed=true]{background:#e2eff6;border-color:#104b65}.geo{padding:14px;background:#eef4f7;border-radius:12px}.geo label{display:flex;gap:8px;align-items:flex-start;min-height:44px;padding-top:10px;font-size:.88rem;font-weight:500}.geo input{width:18px;height:18px;flex-shrink:0}.note a{color:#104b65}.note button{background:none;border:0;color:#104b65;text-decoration:underline;padding-inline:6px}
+@media(max-width:650px){.shell{width:calc(100% - 28px)}.bar{min-height:66px}main{padding-top:14px}.hero{min-height:350px;border-radius:20px}.hero:after{background:linear-gradient(0deg,#092b3ef7,#092b3e80 65%,#092b3e19)}.hero img{object-position:58% center}.services{grid-template-columns:1fr}.service{padding:14px}.nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.nav button{padding:8px 4px;font-size:.87rem}.panel{padding:16px}.choices{gap:8px}.choice{padding:11px;font-size:.92rem}}
 </style>
 </head>
 <body>
 <header><div class="shell bar"><div class="brand"><span class="mark" aria-hidden="true">↗</span><div>La Línea en tu mano<small>La Línea de la Concepción</small></div></div><span class="badge">Prototipo</span></div></header>
 <main class="shell">
-<section class="hero"><h1>¿Qué ocurre<br>en tu calle?</h1><p>Comunica una incidencia en la vía pública y consulta cómo avanza tu aviso.</p></section>
+<section class="hero">
+<img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/La_Linea_de_la_Concepcion_2.jpg/1280px-La_Linea_de_la_Concepcion_2.jpg" alt="Vista aérea de la playa de Santa Bárbara en La Línea de la Concepción" fetchpriority="high">
+<div><p class="place">La Línea de la Concepción</p><h1>Tu ciudad,<br>a mano.</h1><p>Comunica una incidencia, consulta tus avisos o encuentra un servicio municipal.</p><a href="#new" id="start-report" class="primary">Comunicar una incidencia →</a></div>
+</section>
+<p class="photo-credit"><a href="https://commons.wikimedia.org/wiki/File:La_Linea_de_la_Concepcion_2.jpg">Playa de Santa Bárbara · Adam Cli</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> · encuadre adaptado</p>
 <nav class="nav" aria-label="Secciones del prototipo">
-<button type="button" data-view="new" aria-current="page">Nuevo aviso</button>
+<button type="button" data-view="home" aria-current="page">Servicios</button>
+<button type="button" data-view="new">Nuevo aviso</button>
 <button type="button" data-view="mine">Mis avisos</button>
-<button type="button" data-view="staff">Simular gestión</button>
 </nav>
-<section class="panel" id="new">
+<section class="panel" id="home">
+<h2>¿Qué necesitas hacer?</h2>
+<div class="services">
+<button type="button" class="service" data-service="new"><span class="symbol" aria-hidden="true">↗</span><strong>Avisos en la calle</strong><small>Farolas averiadas y baches en la calzada.</small></button>
+<button type="button" class="service" data-detail="permits" aria-expanded="false" aria-controls="permits"><span class="symbol" aria-hidden="true">▤</span><strong>Permisos y expedientes</strong><small>Abre tu Carpeta Ciudadana para consultar tus trámites.</small></button>
+<button type="button" class="service" data-detail="waste" aria-expanded="false" aria-controls="waste"><span class="symbol" aria-hidden="true">♻</span><strong>Residuos y reciclaje</strong><small>Recogida de muebles y Punto Limpio El Zabal.</small></button>
+</div>
+<div class="service-detail" id="permits" hidden><p>Identifícate en la sede electrónica para consultar los expedientes y trámites disponibles.</p><a href="https://www.sedeelectronica.lalinea.es/carpeta-ciudadana">Abrir Carpeta Ciudadana ↗</a></div>
+<div class="service-detail" id="waste" hidden><p>Consulta las instrucciones de recogida de muebles y enseres o localiza el Punto Limpio El Zabal.</p><div class="actions"><a href="https://lalinea.es/ayuntamiento-y-arcgisa-desarrollan-una-campana-para-mejorar-la-recogida-de-enseres-y-muebles-domesticos/">Recogida de enseres ↗</a><a href="https://www.arcgisa.es/Arcgisa/actividad.jsp">Puntos limpios de Arcgisa ↗</a></div></div>
+</section>
+<section class="panel" id="new" tabindex="-1" hidden>
 <h2>Comunicar una incidencia</h2>
 <form id="form">
 <fieldset><legend>¿Qué quieres comunicar?</legend>
@@ -34,6 +52,7 @@ main{padding:32px 0 48px}.hero{background:#103e39;color:#fff;border-radius:24px;
 </div></fieldset>
 <div class="geo">
 <div class="actions"><button type="button" class="secondary" id="gps">Usar mi ubicación</button><button type="button" class="secondary" id="clear-gps" hidden>Quitar ubicación GPS</button></div>
+<label><input type="checkbox" id="street-lookup"> Sugerir la dirección con CartoCiudad. Esto comparte las coordenadas con el servicio de mapas.</label>
 <p class="muted" id="gps-status" role="status">Usa el GPS del teléfono o escribe la dirección.</p>
 <a id="map" target="_blank" rel="noopener noreferrer" hidden>Comprobar ubicación en Mapas</a>
 </div>
@@ -45,7 +64,7 @@ main{padding:32px 0 48px}.hero{background:#103e39;color:#fff;border-radius:24px;
 </form></section>
 <section class="panel" id="mine" hidden><div class="success" id="confirmation" role="status" hidden></div><h2>Mis avisos</h2><p class="muted">Consulta la referencia y el estado de cada incidencia.</p><div id="reports"></div></section>
 <section class="panel" id="staff" hidden><h2>Simular gestión municipal</h2><p class="muted">Cambia el estado de un aviso y vuelve a «Mis avisos» para ver la actualización.</p><div id="queue"></div><p id="staff-status" role="status"></p></section>
-<p class="note">Demostración con GECOR simulado. Los avisos, las ubicaciones y las fotos se guardan en este navegador. <a href="https://www.lalineaentumano.es/" target="_blank" rel="noopener noreferrer">Abrir portal oficial</a>.</p>
+<p class="note">Demostración con GECOR simulado. Los avisos, las ubicaciones y las fotos se guardan en este navegador. <a href="https://www.lalineaentumano.es/" target="_blank" rel="noopener noreferrer">Abrir portal oficial</a> · <button type="button" id="staff-link">Simular gestión municipal</button></p>
 </main>
 <script>
 const key = 'la-linea-demo-v1';
@@ -55,10 +74,42 @@ const nav = [...document.querySelectorAll('[data-view]')];
 const choices = [...document.querySelectorAll('[data-kind]')];
 let reports = [];
 let coordinates = null;
+let suggestedAddress = '';
+const addressInput = find('location');
+function clearSuggestedAddress() {
+  if (suggestedAddress && addressInput.value === suggestedAddress) addressInput.value = '';
+  suggestedAddress = '';
+}
+async function suggestStreet(point) {
+  const params = new URLSearchParams({lon: point.longitude, lat: point.latitude});
+  const request = new AbortController();
+  const timeout = setTimeout(() => request.abort(), 5000);
+  try {
+    const response = await fetch('https://www.cartociudad.es/geocoder/api/geocoder/reverseGeocode?' + params, {signal: request.signal, referrerPolicy: 'no-referrer'});
+    if (!response.ok) throw new Error('CartoCiudad');
+    const result = await response.json();
+    if (coordinates !== point || addressInput.value.trim() || !find('street-lookup').checked) return;
+    const street = [result.tip_via, result.address].filter(Boolean).join(' ').trim();
+    if (!street) throw new Error('Dirección sin coincidencias');
+    const portal = result.portalNumber ?? result.portal;
+    suggestedAddress = [street + (Number(portal) > 0 ? ' ' + portal : ''), result.municipality].filter(Boolean).join(', ').slice(0, 160);
+    addressInput.value = suggestedAddress;
+    find('gps-status').textContent += ' Revisa la dirección sugerida por CartoCiudad.';
+  } catch {
+    if (coordinates === point && find('street-lookup').checked) find('gps-status').textContent += ' Puedes añadir la calle a mano.';
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+find('street-lookup').addEventListener('change', () => {
+  if (find('street-lookup').checked && coordinates) suggestStreet(coordinates);
+  else clearSuggestedAddress();
+});
 function mapsURL(point) {
   return 'https://maps.apple.com/?ll=' + point.latitude + ',' + point.longitude + '&q=Incidencia';
 }
 function setCoordinates(point) {
+  clearSuggestedAddress();
   coordinates = point;
   find('clear-gps').hidden = !point;
   find('map').hidden = !point;
@@ -87,6 +138,7 @@ find('gps').addEventListener('click', () => {
     status.textContent = 'Ubicación añadida · precisión estimada de ' + coordinates.accuracy + ' m. Comprueba el punto antes de enviar.';
     find('error').textContent = '';
     unlock();
+    if (find('street-lookup').checked && !addressInput.value.trim()) suggestStreet(coordinates);
   }, error => {
     status.textContent = error.code === 1
       ? 'El navegador no tiene permiso para acceder a tu ubicación. Puedes escribir la dirección.'
@@ -115,7 +167,8 @@ function show(view) {
     if (active) button.setAttribute('aria-current', 'page');
     else button.removeAttribute('aria-current');
   });
-  render(view === 'staff');
+  find('staff').hidden = view !== 'staff';
+  if (view === 'staff' || view === 'mine') render(view === 'staff');
 }
 function render(staff) {
   const container = find(staff ? 'queue' : 'reports');
@@ -163,6 +216,25 @@ nav.forEach(button => button.addEventListener('click', () => {
   find('confirmation').hidden = true;
   show(button.dataset.view);
 }));
+function startReport(event) {
+  event.preventDefault();
+  show('new');
+  find('new').focus();
+  find('new').scrollIntoView({block: 'start'});
+}
+find('start-report').addEventListener('click', startReport);
+document.querySelector('[data-service="new"]').addEventListener('click', startReport);
+find('staff-link').addEventListener('click', () => {
+  show('staff');
+  find('staff').scrollIntoView({block: 'start'});
+});
+document.querySelectorAll('[data-detail]').forEach(button => {
+  button.addEventListener('click', () => {
+    const panel = find(button.dataset.detail);
+    panel.hidden = !panel.hidden;
+    button.setAttribute('aria-expanded', String(!panel.hidden));
+  });
+});
 choices.forEach(button => button.addEventListener('click', () => {
   category = button.dataset.kind;
   choices.forEach(option => option.setAttribute('aria-pressed', String(option === button)));
