@@ -23,6 +23,10 @@ body{background:#f6f3ea;color:#102e3a}header{background:#f6f3ea}.hero,.panel,.na
 .rail-help{font-size:.82rem;color:#54656a;margin:0}.rail-controls{display:flex;gap:4px}.rail-controls button{width:44px;min-height:44px;border:1px solid #c9d5d7;background:#fffcf5;color:#102e3a}.rail-controls button:disabled{opacity:.35;cursor:default}.choices{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding:8px 4px 14px;margin:0 0 16px;overscroll-behavior-inline:contain;scrollbar-color:#9cadb0 transparent}.choice{flex:0 0 143px;scroll-snap-align:start;min-height:118px;display:grid;align-content:start;gap:9px;background:#f4f1e7;color:#102e3a}.choice span{width:38px;height:36px;display:grid;place-items:center;background:var(--tile,#e3ebef);font-size:1.25rem;margin:0;transition:transform .18s ease}.choice[aria-pressed=true]{background:#102e3a;color:#fff}.choice[aria-pressed=true] span{transform:translateY(-4px) rotate(-7deg) scale(1.12);color:#102e3a}.choice small{display:block;font-weight:500;font-size:.72rem;opacity:.85}.guide{padding:13px 15px;border-left:3px solid #537783;background:#eef4f5;margin:0 0 18px}.guide h3,.guide p{margin:0 0 5px}.guide a{color:#104b65;margin-right:14px;display:inline-flex;align-items:center;min-height:44px}.timeline{display:flex;flex-wrap:wrap;gap:6px 12px;padding:0;list-style:none;font-size:.82rem;color:#516269}.timeline [aria-current]{font-weight:750;color:#102e3a;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:650px){.choice{flex-basis:39%;min-width:112px;padding:10px}.rail-help{max-width:60%}}
 @media(prefers-reduced-motion:reduce){.choice span{transition:none}}
+.choice .service-icon,.service .symbol{width:60px;height:60px;display:grid;place-items:center;color:#102e3a}
+.choice .service-icon svg,.service .symbol svg{width:38px;height:38px}
+.choice{min-height:151px;gap:8px}
+@media(max-width:650px){.choice{flex-basis:41%;min-width:126px}.choice .service-icon{width:56px;height:56px}.choice .service-icon svg{width:36px;height:36px}}
 </style>
 </head>
 <body>
@@ -41,9 +45,9 @@ body{background:#f6f3ea;color:#102e3a}header{background:#f6f3ea}.hero,.panel,.na
 <section class="panel" id="home">
 <h2>¿Qué necesitas hacer?</h2>
 <div class="services">
-<button type="button" class="service" data-service="new"><span class="symbol" aria-hidden="true">↗</span><strong>Avisos en la calle</strong><small>Farolas averiadas y baches en la calzada.</small></button>
-<button type="button" class="service" data-detail="permits" aria-expanded="false" aria-controls="permits"><span class="symbol" aria-hidden="true">▤</span><strong>Permisos y expedientes</strong><small>Abre tu Carpeta Ciudadana para consultar tus trámites.</small></button>
-<button type="button" class="service" data-detail="waste" aria-expanded="false" aria-controls="waste"><span class="symbol" aria-hidden="true">♻</span><strong>Residuos y reciclaje</strong><small>Recogida de muebles y Punto Limpio El Zabal.</small></button>
+<button type="button" class="service" data-service="new"><span class="symbol" aria-hidden="true" data-icon="pin"></span><strong>Avisos en la calle</strong><small>Farolas averiadas y baches en la calzada.</small></button>
+<button type="button" class="service" data-detail="permits" aria-expanded="false" aria-controls="permits"><span class="symbol" aria-hidden="true" data-icon="folder"></span><strong>Permisos y expedientes</strong><small>Abre tu Carpeta Ciudadana para consultar tus trámites.</small></button>
+<button type="button" class="service" data-detail="waste" aria-expanded="false" aria-controls="waste"><span class="symbol" aria-hidden="true" data-icon="recycle"></span><strong>Residuos y reciclaje</strong><small>Recogida de muebles y Punto Limpio El Zabal.</small></button>
 </div>
 <div class="service-detail" id="permits" hidden><p>Identifícate en la sede electrónica para consultar los expedientes y trámites disponibles.</p><a href="https://www.sedeelectronica.lalinea.es/carpeta-ciudadana">Abrir Carpeta Ciudadana ↗</a></div>
 <div class="service-detail" id="waste" hidden><p>Consulta las instrucciones de recogida de muebles y enseres o localiza el Punto Limpio El Zabal.</p><div class="actions"><a href="https://lalinea.es/ayuntamiento-y-arcgisa-desarrollan-una-campana-para-mejorar-la-recogida-de-enseres-y-muebles-domesticos/">Recogida de enseres ↗</a><a href="https://www.arcgisa.es/Arcgisa/actividad.jsp">Puntos limpios de Arcgisa ↗</a></div></div>
@@ -76,28 +80,50 @@ const key = 'la-linea-demo-v1';
 const statuses = ['Recibido', 'En curso', 'Resuelto'];
 const find = id => document.getElementById(id);
 const nav = [...document.querySelectorAll('[data-view]')];
+const pictograms = {
+  "streetlight": "<path d=\"M7 22V5a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1M3 22h8m3-12 1 3m5-3-1 3m-2-3v4\"/><path d=\"M13 8a4 4 0 0 1 8 0z\"/>",
+  "pothole": "<path d=\"M7 3 3 21M17 3l4 18M12 3v3m0 14v1\"/><path d=\"m6 14 3-3 3 1 3-2 3 4-2 3-6 1z\"/>",
+  "sidewalk": "<path d=\"M3 4h18v16H3zM3 9h18M3 15h18M8 4v5m8 0v6m-8 0v5\"/><path d=\"m13 4-2 5 2 3-2 3 2 5\"/>",
+  "waste": "<path d=\"M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7\"/>",
+  "tree": "<path d=\"M12 22V12m0 4 4-4M8 22h8\"/><path d=\"M7 17a4 4 0 0 1-2-7 4 4 0 0 1 4-5 3 3 0 0 1 6 0 4 4 0 0 1 4 5 4 4 0 0 1-2 7z\"/>",
+  "beach": "<path d=\"M3 11a9 9 0 0 1 18 0zM12 2v-1m0 10v8M8 11c0-5 2-9 4-9s4 4 4 9M2 22c2 0 2-3 5-3s3 3 5 3 3-3 5-3 3 3 5 3\"/>",
+  "signal": "<rect x=\"7\" y=\"2\" width=\"10\" height=\"17\" rx=\"2\"/><circle cx=\"12\" cy=\"6\" r=\"1\"/><circle cx=\"12\" cy=\"10.5\" r=\"1\"/><circle cx=\"12\" cy=\"15\" r=\"1\"/><path d=\"M12 19v3m-4 0h8\"/>",
+  "folder": "<path d=\"M3 7V4h7l2 3h9v13H3z\"/><path d=\"m8 13 3 3 5-5\"/>",
+  "recycle": "<path d=\"m9 5 2-3h3l4 6m-4 0h4l1-4m0 8 2 4-2 4h-6m2-3-3 3 3 3m-7-3H4l-2-4 4-6m1 4-1-4-4 1\"/>",
+  "water": "<path d=\"M12 2C9 7 5 10 5 15a7 7 0 0 0 14 0c0-5-4-8-7-13zM8 15a4 4 0 0 0 3 4\"/>",
+  "bus": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"17\" rx=\"2\"/><path d=\"M4 12h16M7 20v2m10-2v2M9 6h6m-7 10h1m6 0h1\"/>",
+  "calendar": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M7 2v6m10-6v6M3 10h18m-13 5h3m2 0h3m-8 3h3\"/>",
+  "receipt": "<path d=\"M5 3h14v19l-3-2-4 2-4-2-3 2zM8 8h8m-8 4h8m-8 4h4\"/>",
+  "community": "<path d=\"m2 8 10-5 10 5H2Zm2 13h16M6 10v8m6-8v8m6-8v8M3 18h18\"/>",
+  "pin": "<path d=\"M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0z\"/><circle cx=\"12\" cy=\"10\" r=\"2.5\"/>"
+};
+function drawPictogram(container, name) {
+  container.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + pictograms[name] + '</svg>';
+}
+document.querySelectorAll('[data-icon]').forEach(node => drawPictogram(node, node.dataset.icon));
 const services = [
-  ['◉', 'Farola averiada', 'Aviso', 'Alumbrado público', 'Mantenimiento Urbano', 'Ej. La farola está apagada desde anoche.'],
-  ['╱', 'Bache en la calzada', 'Aviso', 'Bache en la calzada', 'Mantenimiento Urbano', 'Ej. Bache en el carril derecho.'],
-  ['▥', 'Acera dañada', 'Aviso', 'Acera dañada', 'Mantenimiento Urbano', 'Ej. Hay varias baldosas levantadas.'],
-  ['✦', 'Suciedad y vertidos', 'Aviso', 'Suciedad y vertidos', 'Limpieza', 'Ej. Hay residuos acumulados junto al contenedor.'],
-  ['♧', 'Parques y árboles', 'Aviso', 'Parques y árboles', 'Parques y Jardines', 'Ej. Una rama bloquea el sendero.'],
-  ['≈', 'Playas', 'Aviso', 'Playas', 'Servicio de Playas', 'Ej. La pasarela de acceso está dañada.'],
-  ['↕', 'Semáforos y señales', 'Aviso', 'Semáforos y señales', 'Movilidad', 'Ej. El semáforo del cruce no funciona.'],
-  ['▤', 'Permisos y expedientes', 'Trámite', '', 'Consulta la licencia o el expediente con tu identificación en la sede.', [['Carpeta Ciudadana', 'https://www.sedeelectronica.lalinea.es/carpeta-ciudadana']]],
-  ['♻', 'Muebles y reciclaje', 'Servicio', '', 'Consulta cómo sacar muebles o llevarlos al Punto Limpio El Zabal.', [['Recogida de enseres', 'https://lalinea.es/ayuntamiento-y-arcgisa-desarrollan-una-campana-para-mejorar-la-recogida-de-enseres-y-muebles-domesticos/'], ['Puntos limpios', 'https://www.arcgisa.es/Arcgisa/actividad.jsp']]],
-  ['◒', 'Agua y averías', 'Servicio', '', 'Contacta con Aqualia para incidencias del suministro.', [['Llamar a averías', 'tel:+34900814483'], ['Aqualia La Línea', 'https://www.aqualia.com/en/web/aqualia-es/area-de-cliente/aqualia-contact/la-linea-de-la-concepcion']]],
-  ['↔', 'Autobuses', 'Información', '', 'Consulta las rutas y servicios de transporte.', [['Movilidad', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/movilidad/']]],
-  ['⌂', 'Padrón y citas', 'Trámite', '', 'Accede a los trámites de padrón y consulta la atención municipal.', [['Trámites de padrón', 'https://lalinea.es/nuevos-tramites-habilitados-en-sede-electronica-relacionados-con-el-padron-de-habitantes/'], ['Atención ciudadana', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/participacion-ciudadana/']]],
-  ['€', 'Tasas', 'Trámite', '', 'Accede al trámite disponible en la sede electrónica.', [['Sede electrónica', 'https://www.sedeelectronica.lalinea.es/inicio']]],
-  ['◇', 'Cultura, deporte y ayuda social', 'Información', '', 'Encuentra la delegación municipal que presta el servicio.', [['Directorio municipal', 'https://lalinea.es/ayuntamiento/'], ['Instalaciones deportivas', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/deportes/instalaciones-deportivas/']]]
+  ['streetlight', 'Farola averiada', 'Aviso', 'Alumbrado público', 'Mantenimiento Urbano', 'Ej. La farola está apagada desde anoche.'],
+  ['pothole', 'Bache en la calzada', 'Aviso', 'Bache en la calzada', 'Mantenimiento Urbano', 'Ej. Bache en el carril derecho.'],
+  ['sidewalk', 'Acera dañada', 'Aviso', 'Acera dañada', 'Mantenimiento Urbano', 'Ej. Hay varias baldosas levantadas.'],
+  ['waste', 'Suciedad y vertidos', 'Aviso', 'Suciedad y vertidos', 'Limpieza', 'Ej. Hay residuos acumulados junto al contenedor.'],
+  ['tree', 'Parques y árboles', 'Aviso', 'Parques y árboles', 'Parques y Jardines', 'Ej. Una rama bloquea el sendero.'],
+  ['beach', 'Playas', 'Aviso', 'Playas', 'Servicio de Playas', 'Ej. La pasarela de acceso está dañada.'],
+  ['signal', 'Semáforos y señales', 'Aviso', 'Semáforos y señales', 'Movilidad', 'Ej. El semáforo del cruce no funciona.'],
+  ['folder', 'Permisos y expedientes', 'Trámite', '', 'Consulta la licencia o el expediente con tu identificación en la sede.', [['Carpeta Ciudadana', 'https://www.sedeelectronica.lalinea.es/carpeta-ciudadana']]],
+  ['recycle', 'Muebles y reciclaje', 'Servicio', '', 'Consulta cómo sacar muebles o llevarlos al Punto Limpio El Zabal.', [['Recogida de enseres', 'https://lalinea.es/ayuntamiento-y-arcgisa-desarrollan-una-campana-para-mejorar-la-recogida-de-enseres-y-muebles-domesticos/'], ['Puntos limpios', 'https://www.arcgisa.es/Arcgisa/actividad.jsp']]],
+  ['water', 'Agua y averías', 'Servicio', '', 'Contacta con Aqualia para incidencias del suministro.', [['Llamar a averías', 'tel:+34900814483'], ['Aqualia La Línea', 'https://www.aqualia.com/en/web/aqualia-es/area-de-cliente/aqualia-contact/la-linea-de-la-concepcion']]],
+  ['bus', 'Autobuses', 'Información', '', 'Consulta las rutas y servicios de transporte.', [['Movilidad', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/movilidad/']]],
+  ['calendar', 'Padrón y citas', 'Trámite', '', 'Accede a los trámites de padrón y consulta la atención municipal.', [['Trámites de padrón', 'https://lalinea.es/nuevos-tramites-habilitados-en-sede-electronica-relacionados-con-el-padron-de-habitantes/'], ['Atención ciudadana', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/participacion-ciudadana/']]],
+  ['receipt', 'Tasas', 'Trámite', '', 'Accede al trámite disponible en la sede electrónica.', [['Sede electrónica', 'https://www.sedeelectronica.lalinea.es/inicio']]],
+  ['community', 'Cultura, deporte y ayuda social', 'Información', '', 'Encuentra la delegación municipal que presta el servicio.', [['Directorio municipal', 'https://lalinea.es/ayuntamiento/'], ['Instalaciones deportivas', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/deportes/instalaciones-deportivas/']]]
 ];
 const rail = find('service-rail');
 const choices = services.map(([symbol, label, type], index) => {
   const button = element('button', '', 'choice');
   button.type = 'button';
   button.setAttribute('aria-pressed', 'false');
-  const icon = element('span', symbol);
+  const icon = element('span', '', 'service-icon');
+  drawPictogram(icon, symbol);
   icon.setAttribute('aria-hidden', 'true');
   icon.style.setProperty('--tile', ['#e5edb7', '#deedf3', '#f4e0cb'][index % 3]);
   button.append(icon, element('strong', label), element('small', type));
