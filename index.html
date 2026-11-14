@@ -19,6 +19,10 @@ body{font-family:"DM Sans",system-ui,sans-serif;background:#f8f8f4;color:#162f3a
 @media(max-width:650px){.shell{width:calc(100% - 28px)}.bar{min-height:66px}main{padding-top:14px}.hero{min-height:350px;border-radius:20px}.hero:after{background:linear-gradient(0deg,#092b3ef7,#092b3e80 65%,#092b3e19)}.hero img{object-position:58% center}.services{grid-template-columns:1fr}.service{padding:14px}.nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.nav button{padding:8px 4px;font-size:.87rem}.panel{padding:16px}.choices{gap:8px}.choice{padding:11px;font-size:.92rem}}
 
 body{background:#f6f3ea;color:#102e3a}header{background:#f6f3ea}.hero,.panel,.nav button,.secondary,.primary,.choice,.field input,.field textarea,.success,.report img,#preview,.service,.service .symbol,.service-detail,.geo,.mark,.badge{border-radius:0}.hero{background:#102e3a}.hero h1{font-family:"Instrument Serif",Georgia,serif;font-weight:400;letter-spacing:-.035em}.hero .primary{background:#e6edb5;color:#102e3a}.brand-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.brand-links a{font-size:.87rem;color:#163d51;font-weight:700;text-underline-offset:4px}.mark{background:#102e3a}.panel{background:#fffcf5}.service{background:#f6f3ea}.nav button[aria-current=page],.primary{background:#102e3a;border-color:#102e3a}
+
+.rail-help{font-size:.82rem;color:#54656a;margin:0}.rail-controls{display:flex;gap:4px}.rail-controls button{width:44px;min-height:44px;border:1px solid #c9d5d7;background:#fffcf5;color:#102e3a}.rail-controls button:disabled{opacity:.35;cursor:default}.choices{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding:8px 4px 14px;margin:0 0 16px;overscroll-behavior-inline:contain;scrollbar-color:#9cadb0 transparent}.choice{flex:0 0 143px;scroll-snap-align:start;min-height:118px;display:grid;align-content:start;gap:9px;background:#f4f1e7;color:#102e3a}.choice span{width:38px;height:36px;display:grid;place-items:center;background:var(--tile,#e3ebef);font-size:1.25rem;margin:0;transition:transform .18s ease}.choice[aria-pressed=true]{background:#102e3a;color:#fff}.choice[aria-pressed=true] span{transform:translateY(-4px) rotate(-7deg) scale(1.12);color:#102e3a}.choice small{display:block;font-weight:500;font-size:.72rem;opacity:.85}.guide{padding:13px 15px;border-left:3px solid #537783;background:#eef4f5;margin:0 0 18px}.guide h3,.guide p{margin:0 0 5px}.guide a{color:#104b65;margin-right:14px;display:inline-flex;align-items:center;min-height:44px}.timeline{display:flex;flex-wrap:wrap;gap:6px 12px;padding:0;list-style:none;font-size:.82rem;color:#516269}.timeline [aria-current]{font-weight:750;color:#102e3a;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:650px){.choice{flex-basis:39%;min-width:112px;padding:10px}.rail-help{max-width:60%}}
+@media(prefers-reduced-motion:reduce){.choice span{transition:none}}
 </style>
 </head>
 <body>
@@ -31,7 +35,7 @@ body{background:#f6f3ea;color:#102e3a}header{background:#f6f3ea}.hero,.panel,.na
 <p class="photo-credit"><a href="https://commons.wikimedia.org/wiki/File:La_Linea_de_la_Concepcion_2.jpg">Playa de Santa Bárbara · Adam Cli</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> · encuadre adaptado</p>
 <nav class="nav" aria-label="Secciones del prototipo">
 <button type="button" data-view="home" aria-current="page">Servicios</button>
-<button type="button" data-view="new">Nuevo aviso</button>
+<button type="button" data-view="new">Explorar</button>
 <button type="button" data-view="mine">Mis avisos</button>
 </nav>
 <section class="panel" id="home">
@@ -45,17 +49,16 @@ body{background:#f6f3ea;color:#102e3a}header{background:#f6f3ea}.hero,.panel,.na
 <div class="service-detail" id="waste" hidden><p>Consulta las instrucciones de recogida de muebles y enseres o localiza el Punto Limpio El Zabal.</p><div class="actions"><a href="https://lalinea.es/ayuntamiento-y-arcgisa-desarrollan-una-campana-para-mejorar-la-recogida-de-enseres-y-muebles-domesticos/">Recogida de enseres ↗</a><a href="https://www.arcgisa.es/Arcgisa/actividad.jsp">Puntos limpios de Arcgisa ↗</a></div></div>
 </section>
 <section class="panel" id="new" tabindex="-1" hidden>
-<h2>Comunicar una incidencia</h2>
+<h2>¿Qué necesitas hacer?</h2>
 <form id="form">
-<fieldset><legend>¿Qué quieres comunicar?</legend>
-<div class="choices">
-<button type="button" class="choice" data-kind="Alumbrado público" aria-pressed="false"><span aria-hidden="true">💡</span>Farola averiada</button>
-<button type="button" class="choice" data-kind="Bache en la calzada" aria-pressed="false"><span aria-hidden="true">⚠</span>Bache en la calzada</button>
-</div></fieldset>
+<div class="row"><p class="rail-help">Desliza para explorar o toca una opción</p><div class="rail-controls"><button type="button" id="rail-prev" aria-label="Ver opciones anteriores">←</button><button type="button" id="rail-next" aria-label="Ver más opciones">→</button></div></div>
+<div class="choices" id="service-rail" role="group" aria-label="Servicios e incidencias"></div>
+<div id="service-guide" class="guide" aria-live="polite" hidden></div>
+<div id="report-fields" hidden>
 <div class="geo">
 <div class="actions"><button type="button" class="secondary" id="gps">Usar mi ubicación</button><button type="button" class="secondary" id="clear-gps" hidden>Quitar ubicación GPS</button></div>
 <label><input type="checkbox" id="street-lookup"> Sugerir la dirección con CartoCiudad. Esto comparte las coordenadas con el servicio de mapas.</label>
-<p class="muted" id="gps-status" role="status">Usa el GPS del teléfono o escribe la dirección.</p>
+<p class="muted" id="gps-status" role="status">Al tocar el botón, Safari puede pedirte permiso para usar tu ubicación. También puedes escribir la dirección.</p>
 <a id="map" target="_blank" rel="noopener noreferrer" hidden>Comprobar ubicación en Mapas</a>
 </div>
 <label class="field">Calle o referencia <input id="location" maxlength="160" placeholder="Ej. Calle Real, junto a la plaza"><small>Si has añadido el GPS, puedes dejar este campo vacío.</small></label>
@@ -63,8 +66,8 @@ body{background:#f6f3ea;color:#102e3a}header{background:#f6f3ea}.hero,.panel,.na
 <label class="field">Foto (opcional) <input id="photo" type="file" accept="image/*"></label>
 <img id="preview" alt="Vista previa de la foto" hidden>
 <div class="actions"><button class="primary" type="submit">Enviar aviso</button><p id="error" class="feedback" role="alert"></p></div>
-</form></section>
-<section class="panel" id="mine" hidden><div class="success" id="confirmation" role="status" hidden></div><h2>Mis avisos</h2><p class="muted">Consulta la referencia y el estado de cada incidencia.</p><div id="reports"></div></section>
+</div></form></section>
+<section class="panel" id="mine" hidden><div class="success" id="confirmation" role="status" hidden></div><h2>Mis avisos</h2><p class="muted">Consulta la referencia y el estado de cada incidencia.</p><label class="field">Buscar por referencia <input id="reference" type="search" placeholder="Ej. DEMO-001" autocomplete="off"></label><div id="reports" aria-live="polite"></div></section>
 <section class="panel" id="staff" hidden><h2>Simular gestión municipal</h2><p class="muted">Cambia el estado de un aviso y vuelve a «Mis avisos» para ver la actualización.</p><div id="queue"></div><p id="staff-status" role="status"></p></section>
 <p class="note">Demostración con GECOR simulado. Los avisos, las ubicaciones y las fotos se guardan en este navegador. <a href="https://www.lalineaentumano.es/" target="_blank" rel="noopener noreferrer">Abrir portal oficial</a> · <button type="button" id="staff-link">Simular gestión municipal</button></p>
 </main>
@@ -73,7 +76,34 @@ const key = 'la-linea-demo-v1';
 const statuses = ['Recibido', 'En curso', 'Resuelto'];
 const find = id => document.getElementById(id);
 const nav = [...document.querySelectorAll('[data-view]')];
-const choices = [...document.querySelectorAll('[data-kind]')];
+const services = [
+  ['◉', 'Farola averiada', 'Aviso', 'Alumbrado público', 'Mantenimiento Urbano', 'Ej. La farola está apagada desde anoche.'],
+  ['╱', 'Bache en la calzada', 'Aviso', 'Bache en la calzada', 'Mantenimiento Urbano', 'Ej. Bache en el carril derecho.'],
+  ['▥', 'Acera dañada', 'Aviso', 'Acera dañada', 'Mantenimiento Urbano', 'Ej. Hay varias baldosas levantadas.'],
+  ['✦', 'Suciedad y vertidos', 'Aviso', 'Suciedad y vertidos', 'Limpieza', 'Ej. Hay residuos acumulados junto al contenedor.'],
+  ['♧', 'Parques y árboles', 'Aviso', 'Parques y árboles', 'Parques y Jardines', 'Ej. Una rama bloquea el sendero.'],
+  ['≈', 'Playas', 'Aviso', 'Playas', 'Servicio de Playas', 'Ej. La pasarela de acceso está dañada.'],
+  ['↕', 'Semáforos y señales', 'Aviso', 'Semáforos y señales', 'Movilidad', 'Ej. El semáforo del cruce no funciona.'],
+  ['▤', 'Permisos y expedientes', 'Trámite', '', 'Consulta la licencia o el expediente con tu identificación en la sede.', [['Carpeta Ciudadana', 'https://www.sedeelectronica.lalinea.es/carpeta-ciudadana']]],
+  ['♻', 'Muebles y reciclaje', 'Servicio', '', 'Consulta cómo sacar muebles o llevarlos al Punto Limpio El Zabal.', [['Recogida de enseres', 'https://lalinea.es/ayuntamiento-y-arcgisa-desarrollan-una-campana-para-mejorar-la-recogida-de-enseres-y-muebles-domesticos/'], ['Puntos limpios', 'https://www.arcgisa.es/Arcgisa/actividad.jsp']]],
+  ['◒', 'Agua y averías', 'Servicio', '', 'Contacta con Aqualia para incidencias del suministro.', [['Llamar a averías', 'tel:+34900814483'], ['Aqualia La Línea', 'https://www.aqualia.com/en/web/aqualia-es/area-de-cliente/aqualia-contact/la-linea-de-la-concepcion']]],
+  ['↔', 'Autobuses', 'Información', '', 'Consulta las rutas y servicios de transporte.', [['Movilidad', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/movilidad/']]],
+  ['⌂', 'Padrón y citas', 'Trámite', '', 'Accede a los trámites de padrón y consulta la atención municipal.', [['Trámites de padrón', 'https://lalinea.es/nuevos-tramites-habilitados-en-sede-electronica-relacionados-con-el-padron-de-habitantes/'], ['Atención ciudadana', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/participacion-ciudadana/']]],
+  ['€', 'Tasas', 'Trámite', '', 'Accede al trámite disponible en la sede electrónica.', [['Sede electrónica', 'https://www.sedeelectronica.lalinea.es/inicio']]],
+  ['◇', 'Cultura, deporte y ayuda social', 'Información', '', 'Encuentra la delegación municipal que presta el servicio.', [['Directorio municipal', 'https://lalinea.es/ayuntamiento/'], ['Instalaciones deportivas', 'https://lalinea.es/areas/cohesion-social-y-relaciones-ciudadania/deportes/instalaciones-deportivas/']]]
+];
+const rail = find('service-rail');
+const choices = services.map(([symbol, label, type], index) => {
+  const button = element('button', '', 'choice');
+  button.type = 'button';
+  button.setAttribute('aria-pressed', 'false');
+  const icon = element('span', symbol);
+  icon.setAttribute('aria-hidden', 'true');
+  icon.style.setProperty('--tile', ['#e5edb7', '#deedf3', '#f4e0cb'][index % 3]);
+  button.append(icon, element('strong', label), element('small', type));
+  rail.append(button);
+  return button;
+});
 let reports = [];
 let coordinates = null;
 let suggestedAddress = '';
@@ -143,7 +173,7 @@ find('gps').addEventListener('click', () => {
     if (find('street-lookup').checked && !addressInput.value.trim()) suggestStreet(coordinates);
   }, error => {
     status.textContent = error.code === 1
-      ? 'El navegador no tiene permiso para acceder a tu ubicación. Puedes escribir la dirección.'
+      ? 'Safari tiene bloqueada la ubicación. En el menú de esta página, abre los ajustes del sitio y cambia «Ubicación» a «Preguntar» o «Permitir». También puedes escribir la dirección.'
       : 'No se pudo obtener una nueva ubicación. Inténtalo de nuevo o escribe la dirección.';
     unlock();
   }, {enableHighAccuracy: true, timeout: 12000, maximumAge: 0});
@@ -171,18 +201,32 @@ function show(view) {
   });
   find('staff').hidden = view !== 'staff';
   if (view === 'staff' || view === 'mine') render(view === 'staff');
+  if (view === 'new') updateRail();
 }
 function render(staff) {
   const container = find(staff ? 'queue' : 'reports');
   container.replaceChildren();
-  if (!reports.length) {
-    container.append(element('p', 'Todavía no hay avisos. Crea uno desde «Nuevo aviso».', 'muted'));
+  const query = staff ? '' : find('reference').value.trim().toUpperCase();
+  const visible = reports.filter(report => report.id.includes(query));
+  if (query && !visible.length) container.append(element('p', 'No hay avisos con esa referencia en este navegador.', 'muted'));
+  if (!reports.length && !query) {
+    container.append(element('p', 'Todavía no hay avisos. Crea uno desde «Explorar».', 'muted'));
   }
-  reports.forEach(report => {
+  visible.forEach(report => {
     const item = element('article', '', 'report');
     const row = element('div', '', 'row');
     row.append(element('h3', report.category), element('span', statuses[report.stage], 'badge status'));
     item.append(row, element('p', report.id + (report.location ? ' · ' + report.location : '')));
+    if (report.department) item.append(element('p', 'Destino de ejemplo · ' + report.department, 'muted'));
+    if (!staff) {
+      const timeline = element('ol', '', 'timeline');
+      statuses.forEach((status, stage) => {
+        const step = element('li', stage < report.stage ? '✓ ' + status : status);
+        if (stage === report.stage) step.setAttribute('aria-current', 'step');
+        timeline.append(step);
+      });
+      item.append(timeline);
+    }
     if (report.coordinates) {
       const link = element('a', 'Ver punto en Mapas');
       link.href = mapsURL(report.coordinates);
@@ -237,9 +281,40 @@ document.querySelectorAll('[data-detail]').forEach(button => {
     button.setAttribute('aria-expanded', String(!panel.hidden));
   });
 });
-choices.forEach(button => button.addEventListener('click', () => {
-  category = button.dataset.kind;
+function updateRail() {
+  find('rail-prev').disabled = rail.scrollLeft <= 1;
+  find('rail-next').disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
+}
+function moveRail(direction) {
+  const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+  rail.scrollBy({left: direction * rail.clientWidth * .72, behavior});
+}
+rail.addEventListener('scroll', updateRail, {passive: true});
+window.addEventListener('resize', updateRail);
+find('rail-prev').addEventListener('click', () => moveRail(-1));
+find('rail-next').addEventListener('click', () => moveRail(1));
+find('reference').addEventListener('input', () => render(false));
+let department = '';
+choices.forEach((button, index) => button.addEventListener('click', () => {
+  const [, label, , kind, destination, detail] = services[index];
+  category = kind;
+  department = kind ? destination : '';
   choices.forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+  const guide = find('service-guide');
+  guide.hidden = false;
+  guide.replaceChildren(element('h3', label));
+  find('report-fields').hidden = !kind;
+  if (kind) {
+    guide.append(element('p', 'Destino propuesto · ' + destination + ' · Aviso simulado'));
+    find('description').placeholder = detail;
+  } else {
+    guide.append(element('p', destination));
+    detail.forEach(([name, url]) => {
+      const link = element('a', name + ' ↗');
+      link.href = url;
+      guide.append(link);
+    });
+  }
   find('error').textContent = '';
 }));
 find('photo').addEventListener('change', async event => {
@@ -289,15 +364,19 @@ find('form').addEventListener('submit', event => {
   }
   const id = 'DEMO-' + String(reports.length + 1).padStart(3, '0');
   try {
-    save([{id, category, location, coordinates, description: find('description').value.trim(), photo: attachment, stage: 0}, ...reports]);
+    save([{id, category, department, location, coordinates, description: find('description').value.trim(), photo: attachment, stage: 0}, ...reports]);
   } catch {
     find('error').textContent = 'No se pudo guardar el aviso en este navegador. Prueba sin la foto.';
     return;
   }
   event.target.reset();
   setCoordinates(null);
-  find('gps-status').textContent = 'Usa el GPS del teléfono o escribe la dirección.';
+  find('gps-status').textContent = 'Al tocar el botón, Safari puede pedirte permiso para usar tu ubicación. También puedes escribir la dirección.';
   category = '';
+  department = '';
+  find('report-fields').hidden = true;
+  find('service-guide').hidden = true;
+  find('reference').value = '';
   attachment = '';
   find('preview').hidden = true;
   find('preview').removeAttribute('src');
